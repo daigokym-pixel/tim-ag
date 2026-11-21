@@ -18,7 +18,7 @@ export async function GET(req) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ grant_type: 'authorization_code', code, redirect_uri: `${url.origin}/api/auth/callback`, client_id: (process.env.LINE_CHANNEL_ID || '').trim(), client_secret: (process.env.LINE_CHANNEL_SECRET || '').trim() }),
     });
-    if (!tokenRes.ok) { console.error('LINE token error', tokenRes.status, (await tokenRes.text()).slice(0, 200)); return fail('token'); }
+    if (!tokenRes.ok) { const t = (await tokenRes.text()).slice(0, 160); console.error('LINE token error', tokenRes.status, t); return NextResponse.redirect(`${url.origin}/login?error=token&detail=${encodeURIComponent(`${tokenRes.status} ${t}`)}`); }
     const { access_token } = await tokenRes.json();
     const profRes = await fetch('https://api.line.me/v2/profile', { headers: { Authorization: `Bearer ${access_token}` } });
     if (!profRes.ok) return fail('profile');
@@ -40,6 +40,10 @@ export async function GET(req) {
     return NextResponse.redirect(`${url.origin}/`);
   } catch (e) {
     console.error(e);
-    return fail('server');
+    // 原因の切り分け用（秘密の値は出さない。どの設定が足りないかと、エラーの種類だけ）
+    const miss = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'SESSION_SECRET', 'LINE_CHANNEL_ID', 'LINE_CHANNEL_SECRET'].filter((k) => !(process.env[k] || '').trim());
+    const sec = (process.env.SESSION_SECRET || '').length;
+    const detail = `${miss.length ? `未設定:${miss.join(',')} ` : ''}${sec && sec < 32 ? `SESSION_SECRETが${sec}文字(32文字以上必要) ` : ''}${String(e?.code || '')} ${String(e?.message || e).slice(0, 120)}`;
+    return NextResponse.redirect(`${url.origin}/login?error=server&detail=${encodeURIComponent(detail)}`);
   }
 }

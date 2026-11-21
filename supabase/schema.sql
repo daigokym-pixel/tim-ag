@@ -20,3 +20,7 @@ create table if not exists ag_state (
 -- ブラウザから直接は読めないようにする（サイトのサーバーだけがアクセスする）
 alter table ag_members enable row level security;
 alter table ag_state enable row level security;
+
+-- サイトのサーバー（service_role）が読み書きできるようにする
+grant select, insert, update, delete on table ag_members to service_role;
+grant select, insert, update, delete on table ag_state to service_role;

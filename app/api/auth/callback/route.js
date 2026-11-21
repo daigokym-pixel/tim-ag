@@ -43,7 +43,11 @@ export async function GET(req) {
     // 原因の切り分け用（秘密の値は出さない。どの設定が足りないかと、エラーの種類だけ）
     const miss = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'SESSION_SECRET', 'LINE_CHANNEL_ID', 'LINE_CHANNEL_SECRET'].filter((k) => !(process.env[k] || '').trim());
     const sec = (process.env.SESSION_SECRET || '').length;
-    const detail = `${miss.length ? `未設定:${miss.join(',')} ` : ''}${sec && sec < 32 ? `SESSION_SECRETが${sec}文字(32文字以上必要) ` : ''}${String(e?.code || '')} ${String(e?.message || e).slice(0, 120)}`;
+    // キーの種類だけを見る（キーそのものは出さない）
+    const k = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
+    let kind = k.startsWith('sb_secret_') ? 'secretキー' : k.startsWith('sb_publishable_') ? 'publishableキー（使えません）' : '不明なキー';
+    if (k.startsWith('eyJ')) { try { kind = `${JSON.parse(Buffer.from(k.split('.')[1], 'base64url').toString()).role}キー`; } catch {} }
+    const detail = `${miss.length ? `未設定:${miss.join(',')} ` : ''}${sec && sec < 32 ? `SESSION_SECRETが${sec}文字(32文字以上必要) ` : ''}[${kind}] ${String(e?.code || '')} ${String(e?.message || e).slice(0, 120)}`;
     return NextResponse.redirect(`${url.origin}/login?error=server&detail=${encodeURIComponent(detail)}`);
   }
 }

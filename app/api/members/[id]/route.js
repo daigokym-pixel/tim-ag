@@ -16,7 +16,7 @@ export async function PUT(req, { params }) {
     // 担当者が変えるのは関門・MTG日時・ランク・採点だけ。ほかはメンバー本人の最新の回答を残す
     const { data: cur } = await sb.from('ag_state').select('data').eq('member_id', id).maybeSingle();
     const merged = { ...(cur?.data || {}) };
-    ['gate', 'gdate', 'rank', 'score'].forEach((k) => { if (k in body.data) merged[k] = body.data[k]; });
+    ['gate', 'gdate', 'rank', 'score', 't4'].forEach((k) => { if (k in body.data) merged[k] = body.data[k]; });
     const { error } = await sb.from('ag_state').upsert({ member_id: id, data: merged, updated_at: new Date().toISOString() });
     if (error) return NextResponse.json({ error: 'db' }, { status: 500 });
   }

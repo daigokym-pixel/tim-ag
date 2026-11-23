@@ -804,6 +804,19 @@ strong.rn{color:var(--acc-text);font-family:'Space Grotesk',var(--font);font-wei
 .rck{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#fff;background:var(--acc)}
 .iggoal,.igtip,.igsum,.igflow{display:none}
 @media (max-width:560px){.vflow{flex-direction:column}.vflow li:not(:last-child)::after{right:auto;left:50%;top:auto;bottom:-9px;transform:translateX(-50%) rotate(135deg)}.vbr{grid-template-columns:72px 1fr auto}}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{font:inherit;text-align:left;display:flex;gap:12px;align-items:flex-start;width:100%;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;line-height:1.6}
+.qopt .qk{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-family:'Space Grotesk',var(--font);font-weight:700;font-size:13px;background:var(--bg);color:var(--mut)}
+.qopt.sel{border-color:var(--acc);background:var(--acc-soft)} .qopt.sel .qk{background:var(--acc);color:#fff}
+.qopt.right{border-color:#2E9E5B;background:color-mix(in srgb,#2E9E5B 12%,var(--card))} .qopt.right .qk{background:#2E9E5B;color:#fff}
+.qopt.wrong{border-color:var(--ng);background:var(--ng-soft)} .qopt.wrong .qk{background:var(--ng);color:#fff}
+.qopt[disabled]{cursor:default;opacity:1}
+.tq2.t4.ok .tno{background:#2E9E5B;color:#fff} .tq2.t4.ng .tno{background:var(--ng);color:#fff}
+.texp{font-size:14px;padding:10px 12px;border-radius:10px;background:var(--bg);line-height:1.7}
+.tscore{display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:16px;color:#fff;background:linear-gradient(120deg,var(--acc),color-mix(in srgb,var(--acc) 50%,#7A5AF8))}
+.tscore small{font-weight:700;opacity:.85} .tscore .big{font-size:44px;color:#fff} .tscore span,.tscore .mut{color:rgba(255,255,255,.9)}
+.tsbar{height:10px;border-radius:5px;background:rgba(255,255,255,.25);overflow:hidden} .tsbar i{display:block;height:100%;background:linear-gradient(90deg,#FFD27A,var(--pop));border-radius:5px}
+.tsubmit{position:sticky;bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:14px;background:var(--card);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--line)}
 
 .membed{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0A1631}
 .membed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}

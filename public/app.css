@@ -817,6 +817,7 @@ strong.rn{color:var(--acc-text);font-family:'Space Grotesk',var(--font);font-wei
 .tscore small{font-weight:700;opacity:.85} .tscore .big{font-size:44px;color:#fff} .tscore span,.tscore .mut{color:rgba(255,255,255,.9)}
 .tsbar{height:10px;border-radius:5px;background:rgba(255,255,255,.25);overflow:hidden} .tsbar i{display:block;height:100%;background:linear-gradient(90deg,#FFD27A,var(--pop));border-radius:5px}
 .tsubmit{position:sticky;bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:14px;background:var(--card);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--line)}
+.whoimg{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
 
 .membed{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0A1631}
 .membed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
